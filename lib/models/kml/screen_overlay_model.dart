@@ -85,15 +85,16 @@ class ScreenOverlayModel {
     return ScreenOverlayModel(
       name: 'LogoSO',
       icon:
-          'https://github.com/Mahy02/HAPIS-Refurbishment--Humanitarian-Aid-Panoramic-Interactive-System-/blob/week4/hapis/assets/images/LG%20logos.jpg?raw=true',
+          'https://github.com/Mahy02/HAPIS-Refurbishment--Humanitarian-Aid-Panoramic-Interactive-System-/blob/main/hapis/assets/images/LOGO%20LIQUID%20GALAXY-sq1000-%20OKnoline.png?raw=true',
       overlayX: 0,
       overlayY: 1,
       screenX: 0.02,
       screenY: 0.95,
-      sizeX: 446,
-      sizeY: 421,
-      // sizeX: 279, // reduce the size by 50%
-      // sizeY: 263, // reduce the size by 50%
+      // sizeX: 765,
+      // sizeY: 594,
+
+      sizeX: 382.5, // reduce the size by 50%
+      sizeY: 297, // reduce the size by 50%
     );
   }
 }

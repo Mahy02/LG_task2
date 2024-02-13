@@ -121,16 +121,6 @@ class PlacemarkModel {
     ${tour != null ? tour!.tag : ''}
   ''';
 
-  // String get pinOnlyTag => '''
-  //   <Placemark>
-  //     <name>$name</name>
-  //     <description><![CDATA[$description]]></description>
-  //     ${lookAt == null ? '' : lookAt!.tag}
-  //     <styleUrl>$id</styleUrl>
-  //     ${point.tag}
-  //   </Placemark>
-  // ''';
-
   String get pinOnlyTag => '''
     <Placemark>
       <Style id="${id}_icon">

@@ -66,6 +66,18 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/bubble_info.png
+    - assets/images/bubble_info2.png
+    - assets/images/fly_to_home_button.png
+    - assets/images/LG_logo.png
+    - assets/images/lg.png
+    - assets/images/orbit1.png
+    - assets/images/orbit2.png
+    - assets/images/reboot.png
+    - assets/images/reboot2.png 
+    - assets/images/connect_red.png 
+    - assets/images/connect_grey.png 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
