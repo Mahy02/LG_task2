@@ -1,5 +1,3 @@
-
-
 import '../models/kml/KMLModel.dart';
 import '../models/kml/look_at_model.dart';
 import '../models/kml/screen_overlay_model.dart';
@@ -221,6 +219,7 @@ fi
   /// Command: 'echo "playtour=Orbit" > /tmp/query.txt'
   Future<void> startTour(String tourName) async {
     try {
+      print('here play tour');
       await query('playtour=$tourName');
     } catch (e) {
       // ignore: avoid_print

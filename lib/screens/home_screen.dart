@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lg_task2/screens/configuration_screen.dart';
+import 'package:lg_task2/screens/home_city_screen.dart';
+import 'package:lg_task2/screens/settings_screen.dart';
 
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../models/kml/look_at_model.dart';
+import '../models/kml/orbit_model.dart';
 import '../providers/connection_provider.dart';
 import '../providers/ssh_provider.dart';
 import '../reusable_widgets.dart/app_bar.dart';
@@ -47,8 +50,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const Configuration()), // Replace SecondPage with your desired destination page
+                        builder: (context) => const Configuration()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -76,44 +78,47 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        const Align(
-            alignment: Alignment.center,
-            child: SubText(
-              subTextContent: 'Welcome to Liquid Galaxy !',
-              fontSize: 40,
-            )),
+        Align(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SubText(
+                subTextContent: 'Welcome to Liquid Galaxy',
+                fontSize: 40,
+              ),
+              Image.asset(
+                'assets/images/lg.png',
+                width: MediaQuery.of(context).size.width * 0.08,
+                height: MediaQuery.of(context).size.height * 0.08,
+              ),
+              const SubText(
+                subTextContent: '!',
+                fontSize: 40,
+              ),
+            ],
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             LgElevatedButton(
-                elevatedButtonContent: 'Reboot LG',
+                elevatedButtonContent: 'LG Settings',
                 buttonColor: AppColors.lgColor1,
                 height: MediaQuery.of(context).size.height * 0.3,
                 width: MediaQuery.of(context).size.width * 0.25,
-                imagePath: 'assets/images/reboot2.png',
+                imagePath: 'assets/images/settings.png',
                 imageHeight: MediaQuery.of(context).size.height * 0.1,
                 imageWidth: MediaQuery.of(context).size.height * 0.1,
                 fontSize: 25,
                 isPoly: false,
                 onpressed: () async {
-                  /// retrieving the ssh data from the `ssh provider`
-                  final sshData =
-                      Provider.of<SSHprovider>(context, listen: false);
-
-                  ///checking the connection status first
-                  if (sshData.client != null) {
-                    /// calling `reboot` from `LGService`
-
-                    //warning message first
-                    showPopUp(context, 'Are you sure you want to Reboot?', '',
-                        'YES', 'CANCEL', () {
-                      LgService(sshData).reboot();
-                    });
-                  } else {
-                    ///Showing error message
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const Settings()), // Replace SecondPage with your desired destination page
+                  );
                 }),
             LgElevatedButton(
                 elevatedButtonContent: 'Fly To Home',
@@ -131,7 +136,8 @@ class _HomePageState extends State<HomePage> {
 
                   ///checking the connection status first
                   if (sshData.client != null) {
-                    await LgService(sshData).flyTo(LookAtModel(
+                    //await LgService(sshData).clearKml();
+                    LookAtModel lookAtObj = LookAtModel(
                       longitude: 31.2348283,
                       latitude: 30.0512139,
                       range: '10000',
@@ -139,7 +145,27 @@ class _HomePageState extends State<HomePage> {
                       altitude: 50000.1097385,
                       heading: '0',
                       altitudeMode: 'relativeToSeaFloor',
-                    ));
+                    );
+                    await LgService(sshData).flyTo(lookAtObj);
+                    LookAtModel lookAtObjOrbit = LookAtModel(
+                      longitude: 31.2348283,
+                      latitude: 30.0512139,
+                      range: '8000',
+                      tilt: '45',
+                      altitude: 10000,
+                      heading: '0',
+                      altitudeMode: 'relativeToSeaFloor',
+                    );
+                    final orbit =
+                        OrbitModel.buildOrbit(OrbitModel.tag(lookAtObjOrbit));
+                    //await Future.delayed(const Duration(seconds: 5), () {});
+                    await LgService(sshData).sendTour(orbit, 'Orbit');
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeCityPage()),
+                    );
                   } else {
                     ///Showing error message
                     showPopUp(context, 'Not Connected to LG !!',
@@ -148,49 +174,37 @@ class _HomePageState extends State<HomePage> {
                 }),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            LgElevatedButton(
-                elevatedButtonContent: 'Orbit',
-                buttonColor: AppColors.lgColor3,
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 0.25,
-                imagePath: 'assets/images/orbit1.png',
-                imageHeight: MediaQuery.of(context).size.height * 0.1,
-                imageWidth: MediaQuery.of(context).size.height * 0.1,
-                fontSize: 25,
-                isPoly: false,
-                onpressed: () async {
-                  final sshData =
-                      Provider.of<SSHprovider>(context, listen: false);
+        Center(
+          child: GestureDetector(
+            onTap: () async {
+              final sshData = Provider.of<SSHprovider>(context, listen: false);
 
-                  if (sshData.client != null) {
-                    try {
-                      // await LgService(sshData).stopTour();
-                      await LgService(sshData).sendTour('orbit', 'Orbit');
-                      await LgService(sshData).startTour('Orbit');
-                    } catch (e) {
-                      // ignore: avoid_print
-                      print(e);
-                    }
-                  } else {
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
-                  }
-                }),
-            LgElevatedButton(
-                elevatedButtonContent: 'Show Info',
-                buttonColor: AppColors.lgColor4,
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 0.25,
-                imagePath: 'assets/images/bubble_info2.png',
-                imageHeight: MediaQuery.of(context).size.height * 0.1,
-                imageWidth: MediaQuery.of(context).size.height * 0.1,
-                fontSize: 25,
-                isPoly: false,
-                onpressed: () async {}),
-          ],
+              ///checking the connection status first
+              if (sshData.client != null) {
+                //await LgService(sshData).clearKml();
+                LookAtModel lookAtObj = LookAtModel(
+                  longitude: -45.4518936,
+                  latitude: 0.0000101,
+                  range: '31231212.86',
+                  tilt: '0',
+                  altitude: 50000.1097385,
+                  heading: '0',
+                  altitudeMode: 'relativeToSeaFloor',
+                );
+                await LgService(sshData).flyTo(lookAtObj);
+              } else {
+                ///Showing error message
+                showPopUp(context, 'Not Connected to LG !!',
+                    'Please Connect to LG', 'OK', null, null);
+              }
+            },
+            child: Image.asset(
+              'assets/images/earth.png',
+              width: 200,
+              height: 200,
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ],
     );

@@ -34,7 +34,7 @@ class PlacemarkModel {
   LookAtModel? lookAt;
 
   /// Property that defines the placemark `point` entity.
-  PointModel point;
+  PointModel? point;
 
   /// Property that defines the placemark `line` entity.
   LineModel? line;
@@ -53,7 +53,7 @@ class PlacemarkModel {
     this.tour,
     required this.id,
     required this.name,
-    required this.point,
+    this.point,
     this.line,
   });
 
@@ -113,7 +113,7 @@ class PlacemarkModel {
       <description><![CDATA[$description]]></description>
       ${lookAt == null ? '' : lookAt!.tag}
       <styleUrl>$id</styleUrl>
-      ${point.tag}
+      ${point?.tag}
       <visibility>${visibility ? 1 : 0}</visibility>
       <gx:balloonVisibility>0</gx:balloonVisibility>
     </Placemark>
@@ -132,7 +132,7 @@ class PlacemarkModel {
         </IconStyle>
       </Style>
       <styleUrl>#${id}_icon</styleUrl>
-      ${point.tag}
+      ${point?.tag}
     </Placemark>
    
   ''';
@@ -173,7 +173,7 @@ class PlacemarkModel {
     <Placemark>
       <name>$name-Balloon</name>
       <styleUrl>#balloon-$id</styleUrl>
-      ${point.tag}
+      ${point?.tag}
       <gx:balloonVisibility>${balloonContent.isEmpty ? 0 : 1}</gx:balloonVisibility>
     </Placemark>
   ''';
@@ -190,7 +190,7 @@ class PlacemarkModel {
       'scale': scale,
       'balloonContent': balloonContent,
       'lookAt': lookAt?.toMap(),
-      'point': point.toMap(),
+      'point': point?.toMap(),
       'line': line!.toMap(),
       'tour': tour?.toMap(),
     };
