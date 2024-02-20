@@ -12,7 +12,7 @@ import '../providers/connection_provider.dart';
 import '../providers/ssh_provider.dart';
 import '../reusable_widgets.dart/app_bar.dart';
 import '../reusable_widgets.dart/connection_indicator.dart';
-import '../reusable_widgets.dart/dialog_popup.dart';
+import '../reusable_widgets.dart/dialog_builder.dart';
 import '../reusable_widgets.dart/lg_elevated_button.dart';
 import '../reusable_widgets.dart/sub_text.dart';
 import '../services/lg_functionalities.dart';
@@ -136,7 +136,6 @@ class _HomePageState extends State<HomePage> {
 
                   ///checking the connection status first
                   if (sshData.client != null) {
-                    //await LgService(sshData).clearKml();
                     LookAtModel lookAtObj = LookAtModel(
                       longitude: 31.2348283,
                       latitude: 30.0512139,
@@ -146,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                       heading: '0',
                       altitudeMode: 'relativeToSeaFloor',
                     );
-                    await LgService(sshData).flyTo(lookAtObj);
+
                     LookAtModel lookAtObjOrbit = LookAtModel(
                       longitude: 31.2348283,
                       latitude: 30.0512139,
@@ -158,18 +157,27 @@ class _HomePageState extends State<HomePage> {
                     );
                     final orbit =
                         OrbitModel.buildOrbit(OrbitModel.tag(lookAtObjOrbit));
-                    //await Future.delayed(const Duration(seconds: 5), () {});
-                    await LgService(sshData).sendTour(orbit, 'Orbit');
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeCityPage()),
-                    );
+                    try {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeCityPage()),
+                      );
+                      await LgService(sshData).flyTo(lookAtObj);
+                      await LgService(sshData).sendTour(orbit, 'Orbit');
+                    } catch (e) {
+                      // ignore: avoid_print
+                      print(e);
+                    }
+                   
                   } else {
-                    ///Showing error message
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    
+                    dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
           ],
@@ -181,7 +189,7 @@ class _HomePageState extends State<HomePage> {
 
               ///checking the connection status first
               if (sshData.client != null) {
-                //await LgService(sshData).clearKml();
+                
                 LookAtModel lookAtObj = LookAtModel(
                   longitude: -45.4518936,
                   latitude: 0.0000101,
@@ -193,9 +201,13 @@ class _HomePageState extends State<HomePage> {
                 );
                 await LgService(sshData).flyTo(lookAtObj);
               } else {
-                ///Showing error message
-                showPopUp(context, 'Not Connected to LG !!',
-                    'Please Connect to LG', 'OK', null, null);
+               
+                dialogBuilder(
+                    context,
+                    'NOT connected to LG !! \n Please Connect to LG',
+                    true,
+                    'OK',
+                    null);
               }
             },
             child: Image.asset(

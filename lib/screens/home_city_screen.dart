@@ -10,7 +10,7 @@ import '../providers/connection_provider.dart';
 import '../providers/ssh_provider.dart';
 import '../reusable_widgets.dart/app_bar.dart';
 import '../reusable_widgets.dart/connection_indicator.dart';
-import '../reusable_widgets.dart/dialog_popup.dart';
+import '../reusable_widgets.dart/dialog_builder.dart';
 import '../reusable_widgets.dart/lg_elevated_button.dart';
 import '../reusable_widgets.dart/sub_text.dart';
 import '../services/lg_functionalities.dart';
@@ -143,8 +143,14 @@ class _HomeCityPageState extends State<HomeCityPage> {
                       print(e);
                     }
                   } else {
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    // showPopUp(context, 'Not Connected to LG !!',
+                    //     'Please Connect to LG', 'OK', null, null);
+                     dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
             LgElevatedButton(
@@ -169,8 +175,14 @@ class _HomeCityPageState extends State<HomeCityPage> {
                       print(e);
                     }
                   } else {
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    // showPopUp(context, 'Not Connected to LG !!',
+                    //     'Please Connect to LG', 'OK', null, null);
+                     dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
             LgElevatedButton(
@@ -192,8 +204,14 @@ class _HomeCityPageState extends State<HomeCityPage> {
                       _buildBallon();
                     } else {
                       // ignore: use_build_context_synchronously
-                      showPopUp(context, 'Not Connected to LG !!',
-                          'Please Connect to LG', 'OK', null, null);
+                      // showPopUp(context, 'Not Connected to LG !!',
+                      //     'Please Connect to LG', 'OK', null, null);
+                       dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                     }
                   } catch (e) {
                     // ignore: avoid_print

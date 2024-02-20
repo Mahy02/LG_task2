@@ -9,7 +9,7 @@ import '../providers/connection_provider.dart';
 import '../providers/ssh_provider.dart';
 import '../reusable_widgets.dart/back_button.dart';
 import '../reusable_widgets.dart/connection_indicator.dart';
-import '../reusable_widgets.dart/dialog_popup.dart';
+import '../reusable_widgets.dart/dialog_builder.dart';
 import '../reusable_widgets.dart/sub_text.dart';
 import '../reusable_widgets.dart/text_field.dart';
 import '../services/lg_functionalities.dart';
@@ -48,17 +48,21 @@ class _ConfigurationState extends State<Configuration> {
     return SingleChildScrollView(
       child: Consumer<Connectionprovider>(
         builder: (BuildContext context, model, Widget? child) {
-          return
-  
-              Padding(
+          return Padding(
             padding: const EdgeInsets.all(50.0),
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Column(
                   children: [
-                   // const BackButtonWidget(),
-                    ConnectionIndicator(isConnected: model.isConnected),
+                    //const BackButtonWidget(),
+                    Consumer<Connectionprovider>(
+                      builder: (context, connectionProvider, child) {
+                        return ConnectionIndicator(
+                            isConnected: connectionProvider.isConnected);
+                      },
+                    ),
+                    // ConnectionIndicator(isConnected: model.isConnected),
                     const Padding(
                       padding: EdgeInsets.only(
                         top: 50,
@@ -214,8 +218,15 @@ class _ConfigurationState extends State<Configuration> {
                             ///show an error message
                             //showConnectionError(context, result!);
                             // ignore: use_build_context_synchronously
-                            showPopUp(context, 'Not Connected to LG !!',
-                                result!, 'OK', null, null);
+                            // showPopUp(context, 'Not Connected to LG !!',
+                            //     result!, 'OK', null, null);
+                            // ignore: use_build_context_synchronously
+                            dialogBuilder(
+                                context,
+                                'NOT connected to LG !! \n Please Connect to LG',
+                                true,
+                                'OK',
+                                null);
                           }
 
                           ///stop the loading process by setting `isloading` to false

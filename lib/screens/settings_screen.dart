@@ -8,7 +8,7 @@ import '../providers/connection_provider.dart';
 import '../providers/ssh_provider.dart';
 import '../reusable_widgets.dart/app_bar.dart';
 import '../reusable_widgets.dart/connection_indicator.dart';
-import '../reusable_widgets.dart/dialog_popup.dart';
+import '../reusable_widgets.dart/dialog_builder.dart';
 import '../reusable_widgets.dart/lg_elevated_button.dart';
 import '../reusable_widgets.dart/sub_text.dart';
 import '../services/lg_functionalities.dart';
@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-           Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
@@ -46,8 +46,7 @@ class _SettingsState extends State<Settings> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const Configuration()), 
+                        builder: (context) => const Configuration()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -104,14 +103,30 @@ class _SettingsState extends State<Settings> {
                     /// calling `reboot` from `LGService`
 
                     //warning message first
-                    showPopUp(context, 'Are you sure you want to Reboot?', '',
-                        'YES', 'CANCEL', () {
-                      LgService(sshData).reboot();
+                    // showPopUp(context, 'Are you sure you want to Reboot?', '',
+                    //     'YES', 'CANCEL', () {
+                    //   LgService(sshData).reboot();
+                    // });
+
+                    dialogBuilder(context, 'Are you sure you want to Reboot?',
+                        false, 'YES', () {
+                      try {
+                        LgService(sshData).reboot();
+                      } catch (e) {
+                        // ignore: avoid_print
+                        print(e);
+                      }
                     });
                   } else {
                     ///Showing error message
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    // showPopUp(context, 'Not Connected to LG !!',
+                    //     'Please Connect to LG', 'OK', null, null);
+                    dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
             LgElevatedButton(
@@ -132,14 +147,32 @@ class _SettingsState extends State<Settings> {
                   ///checking the connection status first
                   if (sshData.client != null) {
                     //warning message first
-                    showPopUp(context, 'Are you sure you want to Shut Down?',
-                        '', 'YES', 'CANCEL', () {
-                      LgService(sshData).shutdown();
+                    // showPopUp(context, 'Are you sure you want to Shut Down?',
+                    //     '', 'YES', 'CANCEL', () {
+                    //   LgService(sshData).shutdown();
+                    // });
+                    dialogBuilder(
+                        context,
+                        'Are you sure you want to Shut Down?',
+                        false,
+                        'YES', () {
+                      try {
+                        LgService(sshData).shutdown();
+                      } catch (e) {
+                        // ignore: avoid_print
+                        print(e);
+                      }
                     });
                   } else {
                     ///Showing error message
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    // showPopUp(context, 'Not Connected to LG !!',
+                    //     'Please Connect to LG', 'OK', null, null);
+                    dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
           ],
@@ -167,14 +200,24 @@ class _SettingsState extends State<Settings> {
                     /// calling `reboot` from `LGService`
 
                     //warning message first
-                    showPopUp(context, 'Are you sure you want to Relaunch?', '',
-                        'YES', 'CANCEL', () {
+                    // showPopUp(context, 'Are you sure you want to Relaunch?', '',
+                    //     'YES', 'CANCEL', () {
+                    //   LgService(sshData).relaunch();
+                    // });
+                    dialogBuilder(context, 'Are you sure you want to Relaunch?',
+                        false, 'YES', () {
                       LgService(sshData).relaunch();
                     });
                   } else {
                     ///Showing error message
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    // showPopUp(context, 'Not Connected to LG !!',
+                    //     'Please Connect to LG', 'OK', null, null);
+                    dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
             LgElevatedButton(
@@ -197,8 +240,14 @@ class _SettingsState extends State<Settings> {
                     LgService(sshData).clearKml();
                   } else {
                     ///Showing error message
-                    showPopUp(context, 'Not Connected to LG !!',
-                        'Please Connect to LG', 'OK', null, null);
+                    // showPopUp(context, 'Not Connected to LG !!',
+                    //     'Please Connect to LG', 'OK', null, null);
+                    dialogBuilder(
+                        context,
+                        'NOT connected to LG !! \n Please Connect to LG',
+                        true,
+                        'OK',
+                        null);
                   }
                 }),
           ],
