@@ -101,15 +101,9 @@ class _SettingsState extends State<Settings> {
                   ///checking the connection status first
                   if (sshData.client != null) {
                     /// calling `reboot` from `LGService`
-
-                    //warning message first
-                    // showPopUp(context, 'Are you sure you want to Reboot?', '',
-                    //     'YES', 'CANCEL', () {
-                    //   LgService(sshData).reboot();
-                    // });
-
+                    
                     dialogBuilder(context, 'Are you sure you want to Reboot?',
-                        false, 'YES', () {
+                        false, 'YES', ()  {
                       try {
                         LgService(sshData).reboot();
                       } catch (e) {

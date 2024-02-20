@@ -12,15 +12,12 @@ import 'constants.dart';
 import 'helpers/lg_connection_shared_pref.dart';
 import 'models/ssh_model.dart';
 
-
 void main() async {
-
   /// Initialize the app
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Initialize shared preferences for login session and LG connection
   await LgConnectionSharedPref.init();
-
 
   runApp(
     MultiProvider(
@@ -32,28 +29,28 @@ void main() async {
     ),
   );
 
-  // Timer.periodic(const Duration(seconds: 30), (timer) async {
-  //   final sshData =
-  //       Provider.of<SSHprovider>(navigatorKey.currentContext!, listen: false);
+  Timer.periodic(const Duration(seconds: 30), (timer) async {
+    final sshData =
+        Provider.of<SSHprovider>(navigatorKey.currentContext!, listen: false);
 
-  //   Connectionprovider connection = Provider.of<Connectionprovider>(
-  //       navigatorKey.currentContext!,
-  //       listen: false);
+    Connectionprovider connection = Provider.of<Connectionprovider>(
+        navigatorKey.currentContext!,
+        listen: false);
 
-  //   String? result = await sshData.reconnectClient(
-  //       SSHModel(
-  //         username: LgConnectionSharedPref.getUserName() ?? '',
-  //         host: LgConnectionSharedPref.getIP() ?? '',
-  //         passwordOrKey: LgConnectionSharedPref.getPassword() ?? '',
-  //         port: int.parse(LgConnectionSharedPref.getPort() ?? '22'),
-  //       ),
-  //       navigatorKey.currentContext!);
-  //   if (result == 'fail' || result != '') {
-  //     connection.isConnected = false;
-  //   } else {
-  //     connection.isConnected = true;
-  //   }
-  // });
+    String? result = await sshData.reconnectClient(
+        SSHModel(
+          username: LgConnectionSharedPref.getUserName() ?? '',
+          host: LgConnectionSharedPref.getIP() ?? '',
+          passwordOrKey: LgConnectionSharedPref.getPassword() ?? '',
+          port: int.parse(LgConnectionSharedPref.getPort() ?? '22'),
+        ),
+        navigatorKey.currentContext!);
+    if (result == 'fail' || result != '') {
+      connection.isConnected = false;
+    } else {
+      connection.isConnected = true;
+    }
+  });
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -70,15 +67,12 @@ class LgApp extends StatelessWidget {
     return MaterialApp(
       title: 'LG Task 2',
       theme: ThemeData(
-         fontFamily: GoogleFonts.montserrat().fontFamily,
-          primaryColor: AppColors.primary
-      ),
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+          primaryColor: AppColors.primary),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: const SplashScreen(),
+      navigatorKey: navigatorKey,
     );
   }
+  
 }
-
-
-
-

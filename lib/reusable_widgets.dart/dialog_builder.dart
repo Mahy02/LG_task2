@@ -15,9 +15,6 @@ Future<void> dialogBuilder(BuildContext context, String dialogMessage,
         actions: <Widget>[
           if (isOne == false)
             TextButton(
-              // style: TextButton.styleFrom(
-              //   textStyle: Theme.of(context).textTheme.labelLarge,
-              // ),
               child: const Text('CANCEL',
                   style: TextStyle(fontSize: 20, color: AppColors.lgColor2)),
               onPressed: () {
@@ -25,14 +22,11 @@ Future<void> dialogBuilder(BuildContext context, String dialogMessage,
               },
             ),
           TextButton(
-              // style: TextButton.styleFrom(
-              //   textStyle: Theme.of(context).textTheme.labelLarge,
-              // ),
               onPressed: () {
+                Navigator.of(context).pop();
                 if (onConfirm != null) {
                   onConfirm();
                 }
-                Navigator.of(context).pop();
               },
               child: Text(confirmMessage,
                   style: const TextStyle(
