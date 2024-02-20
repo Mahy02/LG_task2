@@ -22,10 +22,15 @@ Future<void> dialogBuilder(BuildContext context, String dialogMessage,
               },
             ),
           TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop();
                 if (onConfirm != null) {
-                  onConfirm();
+                  try {
+                     onConfirm();
+                  } catch (e) {
+                    // ignore: avoid_print
+                    print(e);
+                  }
                 }
               },
               child: Text(confirmMessage,

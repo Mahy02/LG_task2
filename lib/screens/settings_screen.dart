@@ -93,7 +93,7 @@ class _SettingsState extends State<Settings> {
                 imageWidth: MediaQuery.of(context).size.height * 0.1,
                 fontSize: 25,
                 isPoly: false,
-                onpressed: () async {
+                onpressed: () {
                   /// retrieving the ssh data from the `ssh provider`
                   final sshData =
                       Provider.of<SSHprovider>(context, listen: false);
@@ -101,20 +101,15 @@ class _SettingsState extends State<Settings> {
                   ///checking the connection status first
                   if (sshData.client != null) {
                     /// calling `reboot` from `LGService`
-                    
+
                     dialogBuilder(context, 'Are you sure you want to Reboot?',
-                        false, 'YES', ()  {
-                      try {
-                        LgService(sshData).reboot();
-                      } catch (e) {
-                        // ignore: avoid_print
-                        print(e);
-                      }
+                        false, 'YES', () {
+                      LgService(sshData).reboot();
+                      
                     });
                   } else {
                     ///Showing error message
-                    // showPopUp(context, 'Not Connected to LG !!',
-                    //     'Please Connect to LG', 'OK', null, null);
+                    
                     dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',
@@ -141,10 +136,7 @@ class _SettingsState extends State<Settings> {
                   ///checking the connection status first
                   if (sshData.client != null) {
                     //warning message first
-                    // showPopUp(context, 'Are you sure you want to Shut Down?',
-                    //     '', 'YES', 'CANCEL', () {
-                    //   LgService(sshData).shutdown();
-                    // });
+
                     dialogBuilder(
                         context,
                         'Are you sure you want to Shut Down?',
@@ -159,8 +151,7 @@ class _SettingsState extends State<Settings> {
                     });
                   } else {
                     ///Showing error message
-                    // showPopUp(context, 'Not Connected to LG !!',
-                    //     'Please Connect to LG', 'OK', null, null);
+
                     dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',
@@ -193,19 +184,11 @@ class _SettingsState extends State<Settings> {
                   if (sshData.client != null) {
                     /// calling `reboot` from `LGService`
 
-                    //warning message first
-                    // showPopUp(context, 'Are you sure you want to Relaunch?', '',
-                    //     'YES', 'CANCEL', () {
-                    //   LgService(sshData).relaunch();
-                    // });
                     dialogBuilder(context, 'Are you sure you want to Relaunch?',
                         false, 'YES', () {
                       LgService(sshData).relaunch();
                     });
                   } else {
-                    ///Showing error message
-                    // showPopUp(context, 'Not Connected to LG !!',
-                    //     'Please Connect to LG', 'OK', null, null);
                     dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',
@@ -233,9 +216,7 @@ class _SettingsState extends State<Settings> {
                   if (sshData.client != null) {
                     LgService(sshData).clearKml();
                   } else {
-                    ///Showing error message
-                    // showPopUp(context, 'Not Connected to LG !!',
-                    //     'Please Connect to LG', 'OK', null, null);
+                   
                     dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',

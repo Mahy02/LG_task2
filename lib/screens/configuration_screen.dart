@@ -7,7 +7,6 @@ import '../constants.dart';
 import '../helpers/lg_connection_shared_pref.dart';
 import '../providers/connection_provider.dart';
 import '../providers/ssh_provider.dart';
-import '../reusable_widgets.dart/back_button.dart';
 import '../reusable_widgets.dart/connection_indicator.dart';
 import '../reusable_widgets.dart/dialog_builder.dart';
 import '../reusable_widgets.dart/sub_text.dart';
@@ -55,14 +54,7 @@ class _ConfigurationState extends State<Configuration> {
               children: [
                 Column(
                   children: [
-                    //const BackButtonWidget(),
-                    Consumer<Connectionprovider>(
-                      builder: (context, connectionProvider, child) {
-                        return ConnectionIndicator(
-                            isConnected: connectionProvider.isConnected);
-                      },
-                    ),
-                    // ConnectionIndicator(isConnected: model.isConnected),
+                    ConnectionIndicator(isConnected: model.isConnected),
                     const Padding(
                       padding: EdgeInsets.only(
                         top: 50,
@@ -215,18 +207,8 @@ class _ConfigurationState extends State<Configuration> {
                           } else {
                             connection.isConnected = false;
 
-                            ///show an error message
-                            //showConnectionError(context, result!);
                             // ignore: use_build_context_synchronously
-                            // showPopUp(context, 'Not Connected to LG !!',
-                            //     result!, 'OK', null, null);
-                            // ignore: use_build_context_synchronously
-                            dialogBuilder(
-                                context,
-                                'NOT connected to LG !! \n Please Connect to LG',
-                                true,
-                                'OK',
-                                null);
+                            dialogBuilder(context, result!, true, 'OK', null);
                           }
 
                           ///stop the loading process by setting `isloading` to false
@@ -239,7 +221,6 @@ class _ConfigurationState extends State<Configuration> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(80),
                           ),
-                          //  minimumSize: ,
                         ),
                         child: const Text(
                           'CONNECT TO LG',

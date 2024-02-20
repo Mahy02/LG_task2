@@ -143,8 +143,7 @@ class _HomeCityPageState extends State<HomeCityPage> {
                       print(e);
                     }
                   } else {
-                    // showPopUp(context, 'Not Connected to LG !!',
-                    //     'Please Connect to LG', 'OK', null, null);
+                    
                      dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',
@@ -175,8 +174,7 @@ class _HomeCityPageState extends State<HomeCityPage> {
                       print(e);
                     }
                   } else {
-                    // showPopUp(context, 'Not Connected to LG !!',
-                    //     'Please Connect to LG', 'OK', null, null);
+                   
                      dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',
@@ -203,9 +201,7 @@ class _HomeCityPageState extends State<HomeCityPage> {
                     if (sshData.client != null) {
                       _buildBallon();
                     } else {
-                      // ignore: use_build_context_synchronously
-                      // showPopUp(context, 'Not Connected to LG !!',
-                      //     'Please Connect to LG', 'OK', null, null);
+                      
                        dialogBuilder(
                         context,
                         'NOT connected to LG !! \n Please Connect to LG',

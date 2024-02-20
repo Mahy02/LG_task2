@@ -16,7 +16,7 @@ void main() async {
   /// Initialize the app
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// Initialize shared preferences for login session and LG connection
+  /// Initialize shared preferences for LG connection
   await LgConnectionSharedPref.init();
 
   runApp(
@@ -58,7 +58,6 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class LgApp extends StatelessWidget {
   const LgApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final sshData = Provider.of<SSHprovider>(context, listen: false);
@@ -69,7 +68,6 @@ class LgApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: GoogleFonts.montserrat().fontFamily,
           primaryColor: AppColors.primary),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: const SplashScreen(),
       navigatorKey: navigatorKey,
     );

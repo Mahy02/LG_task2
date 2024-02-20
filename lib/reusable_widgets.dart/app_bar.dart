@@ -20,7 +20,7 @@ class LgAppBar extends StatelessWidget implements PreferredSizeWidget {
           Expanded(
             child: Center(
               child: Text(
-                'Liquid Galaxy Task2',
+                'Liquid Galaxy APP',
                 style: TextStyle(
                     fontSize: 40,
                     fontFamily: GoogleFonts.montserrat().fontFamily,
@@ -36,7 +36,7 @@ class LgAppBar extends StatelessWidget implements PreferredSizeWidget {
           )
         ],
       ),
-      backgroundColor: AppColors.primary,
+      backgroundColor: Colors.black,
       actions: const [],
     );
   }

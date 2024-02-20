@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const Settings()), // Replace SecondPage with your desired destination page
+                            const Settings()), 
                   );
                 }),
             LgElevatedButton(

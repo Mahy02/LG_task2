@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 ///   * [onpressed]  - A [Function] to be displayed when the button is pressed
 ///   * [height] - A [double] parameter for adjusting the height of the button
 ///   * [imagePath] - An optional [String] representing the image path, if a button requires an image
-///   * [isLoading]  - An optional indicator of loading
+
 class LgElevatedButton extends StatelessWidget {
   final String elevatedButtonContent;
   final Color buttonColor;

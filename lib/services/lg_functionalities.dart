@@ -107,7 +107,9 @@ fi
       screenAmount = int.parse(result);
     }
 
-    for (var i = screenAmount; i >= 1; i--) {
+    for (var i = screenAmount; i > 1; i--) {
+      // print('reboot');
+      // print(i);
       try {
         await _sshData
             .execute('sshpass -p $pw ssh -t lg$i "echo $pw | sudo -S reboot"');
@@ -115,6 +117,13 @@ fi
         // ignore: avoid_print
         print(e);
       }
+    }
+    try {
+      await _sshData
+          .execute('sshpass -p $pw ssh -t lg1 "echo $pw | sudo -S reboot"');
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
     }
   }
 
